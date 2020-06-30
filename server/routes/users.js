@@ -1,4 +1,5 @@
 var express = require('express');
+var humps = require('humps');
 var router = express.Router();
 
 var connection = require('../dbConnection.js');
@@ -7,7 +8,7 @@ var connection = require('../dbConnection.js');
 router.get('/', function(req, res, next) {
 connection.query('SELECT * from users', function (err, results, fields) {
   if (err) throw err;
-  res.send(results)
+  res.send(humps.camelizeKeys(results));
 });
 });
 
