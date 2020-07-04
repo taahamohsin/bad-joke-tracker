@@ -6,10 +6,26 @@ var connection = require('../dbConnection.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-connection.query('SELECT * from users', function (err, results, fields) {
-  if (err) throw err;
-  res.send(humps.camelizeKeys(results));
+  connection.query('SELECT * from users', function (err, results, fields) {
+    if (err) throw err;
+    res.send(humps.camelizeKeys(results));
+  });
 });
+
+router.patch('/:id', function(req, res) {
+  var id = req.params.id;
+  var increment = req.body.rating;
+  connection.query(`UPDATE users SET score = score + ${increment} WHERE id = ${id}`);
+  res.send('Done')
+});
+
+router.post('/', function(req, res) {
+  var fName = req.body.firstName;
+  var lName = req.body.lastName;
+  console.log("REQ", req.body)
+  console.log("QUERY", (`INSERT INTO users (first_name, last_name) VALUES ('${fName}', '${lName}')`));
+  connection.query(`INSERT INTO users (first_name, last_name) VALUES ('${fName}', '${lName}')`);
+  res.send('Done')
 });
 
 module.exports = router;

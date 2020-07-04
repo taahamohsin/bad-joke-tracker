@@ -2,6 +2,7 @@
   "dependencies": {
     "antd": "^4.3.5",
     "hump": "^0.0.4",
-    "humps": "^2.0.1"
+    "humps": "^2.0.1",
+    "react-router-dom": "^5.2.0"
   }
 }
