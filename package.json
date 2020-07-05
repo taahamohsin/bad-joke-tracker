@@ -6,6 +6,6 @@
     "react-router-dom": "^5.2.0"
   },
   "scripts": {
-    "start": "./server/bin/www"
+    "start": "NODE_ENV=production ./server/bin/www"
   }
 }
