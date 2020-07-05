@@ -22,7 +22,6 @@ router.patch('/:id', function(req, res) {
 router.post('/', function(req, res) {
   var fName = req.body.firstName;
   var lName = req.body.lastName;
-  console.log("REQ", req.body)
   console.log("QUERY", (`INSERT INTO users (first_name, last_name) VALUES ('${fName}', '${lName}')`));
   connection.query(`INSERT INTO users (first_name, last_name) VALUES ('${fName}', '${lName}')`);
   res.send('Done')
