@@ -3,10 +3,10 @@ var path = require('path');
 
 
 if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config({ path: '.env.development' });
+  require('dotenv').config({ path: '../.env.development' });
 }
 else {
-  require('dotenv').config({ path: '.env' });
+  require('dotenv').config();
 }
 
 var connection = mysql.createConnection({
