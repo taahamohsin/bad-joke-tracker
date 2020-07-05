@@ -1,10 +1,12 @@
 var mysql = require('mysql')
+var path = require('path');
+
 
 if (process.env.NODE_ENV === 'development') {
   require('dotenv').config({ path: '.env.development' });
 }
 else {
-  require('dotenv').config();
+  require('dotenv').config({ path: '.env' });
 }
 
 var connection = mysql.createConnection({
