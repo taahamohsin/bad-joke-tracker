@@ -4,5 +4,8 @@
     "hump": "^0.0.4",
     "humps": "^2.0.1",
     "react-router-dom": "^5.2.0"
+  },
+  "scripts": {
+    "start": "./server/bin/www"
   }
 }

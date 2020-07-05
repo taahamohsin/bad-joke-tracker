@@ -13,6 +13,10 @@ var app = express();
 if (process.env.NODE_ENV === 'development') {
   var cors = require('cors');
   app.use(cors());
+  require('dotenv').config({ path: '.env.development' })
+ }
+ else {
+  require('dotenv').config()
  }
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,7 +26,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -42,6 +46,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 module.exports = app;
