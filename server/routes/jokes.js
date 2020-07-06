@@ -7,7 +7,7 @@ var connection = require('../dbConnection.js');
 /* GET jokes */
 router.get('/', function(req, res, next) {
   var baseString = 'SELECT * from jokes';
-  var joinQuery = 'SELECT jokes.id, title, description, first_name, last_name  from jokes LEFT OUTER JOIN users on jokes.user_id = users.id';
+  var joinQuery = 'SELECT jokes.id, jokes.title, jokes.description, first_name, last_name, ratings.value  from jokes LEFT OUTER JOIN users on jokes.user_id = users.id LEFT OUTER JOIN ratings on jokes.rating_id = ratings.id;';
   var query = req.params.userId ? `${baseString} WHERE user_id = ${req.params.userId}` : joinQuery;
   connection.query(query, function (err, results, fields) {
     if (err) throw err;
