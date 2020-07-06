@@ -22,9 +22,14 @@ router.patch('/:id', function(req, res) {
 router.post('/', function(req, res) {
   var fName = req.body.firstName;
   var lName = req.body.lastName;
-  console.log("QUERY", (`INSERT INTO users (first_name, last_name) VALUES ('${fName}', '${lName}')`));
   connection.query(`INSERT INTO users (first_name, last_name) VALUES ('${fName}', '${lName}')`);
   res.send('Done')
+});
+
+router.delete('/:id', function(req, res) {
+  var id = req.params.id;
+  connection.query(`DELETE FROM users WHERE id = ${id}`);
+  res.send('Done');
 });
 
 module.exports = router;
