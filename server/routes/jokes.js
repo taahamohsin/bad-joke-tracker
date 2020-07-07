@@ -30,4 +30,14 @@ router.post('/', function(req, res) {
   res.send('Done')
 });
 
+router.delete('/:id', function(req, res) {
+  var id = req.params.id;
+  connection.query('SELECT * FROM jokes LEFT JOIN ratings ON jokes.rating_id = ratings.id LEFT JOIN users ON jokes.user_id = users.id', function (err, rows, fields) {
+    connection.query(`UPDATE users SET score = score - ${rows[0].value} WHERE id = ${rows[0].user_id}`, function (err, rows) {
+      connection.query(`DELETE FROM jokes WHERE id = ${id}`);
+    });
+  });
+  res.send('Done')
+});
+
 module.exports = router;
