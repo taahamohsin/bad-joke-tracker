@@ -4,9 +4,14 @@ var router = express.Router();
 
 var connection = require('../dbConnection.js');
 
+var generateCommaSeparatedString = obj => Object.keys(obj).reduce((acc, val, index) => {
+    if (index !== Object.keys(obj).length - 1) return acc + humps.decamelize(val) +  '= ' + '\'' + obj[val] + '\'' + ', ';
+    else return acc + humps.decamelize(val) + '= ' + '\'' + obj[val] + '\'';
+  }, '');
+
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  connection.query('SELECT * from users', function (err, results, fields) {
+router.get('/', function(_, res, next) {
+  connection.query('SELECT * from users', function (err, results, _) {
     if (err) throw err;
     res.send(humps.camelizeKeys(results));
   });
@@ -15,8 +20,14 @@ router.get('/', function(req, res, next) {
 router.patch('/:id', function(req, res) {
   var id = req.params.id;
   var increment = req.body.rating;
-  connection.query(`UPDATE users SET score = score + ${increment} WHERE id = ${id}`);
-  res.send('Done')
+  if (increment) {
+    connection.query(`UPDATE users SET score = score + ${increment} WHERE id = ${id}`, function() {
+      res.send('Done')
+    });
+  }
+  connection.query(`UPDATE users SET ${generateCommaSeparatedString(req.body)} WHERE id = ${id}`, function () {
+    res.send('Done');
+  })
 });
 
 router.post('/', function(req, res) {
