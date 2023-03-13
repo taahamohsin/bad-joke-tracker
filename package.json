@@ -8,7 +8,7 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "build": "react-scripts build",
+    "build": "cd client && react-scripts build",
     "start": "./server/bin/www",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
