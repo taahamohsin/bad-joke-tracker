@@ -23,11 +23,15 @@ router.patch('/:id', function(req, res) {
   if (increment) {
     connection.query(`UPDATE users SET score = score + ${increment} WHERE id = ${id}`, function() {
       res.send('Done')
+      return;
     });
   }
-  connection.query(`UPDATE users SET ${generateCommaSeparatedString(req.body)} WHERE id = ${id}`, function () {
+  else {
+    connection.query(`UPDATE users SET ${generateCommaSeparatedString(req.body)} WHERE id = ${id}`, function () {
     res.send('Done');
-  })
+    return;
+  });
+}
 });
 
 router.post('/', function(req, res) {
